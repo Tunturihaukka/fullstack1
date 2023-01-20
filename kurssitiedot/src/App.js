@@ -46,7 +46,7 @@ const Content = (cont) => {
   return(
     <div>
       <Part ex={cont.ex1} count={cont.count1}/>
-      <Part ex={cont.ex2} count={cont.count2}/>
+      <Part ex={cont.ex2} count={cont.count2 + 5}/>
       <Part ex={cont.ex3} count={cont.count3}/>
     </div>
   )
