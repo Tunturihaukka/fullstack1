@@ -26,18 +26,22 @@ const Total = (exs) => {
   )
 }
 
-const Content = (cont) => {
+const Part = (part) => {
   return(
     <div>
       <p>
-        {cont.ex1} {cont.count1}
+        {part.ex} {part.count}
       </p>
-      <p>
-        {cont.ex2} {cont.count2}
-      </p>
-      <p>
-        {cont.ex3} {cont.count3}
-      </p>
+    </div>
+  )
+}
+
+const Content = (cont) => {
+  return(
+    <div>
+      <Part ex={cont.ex1} count={cont.count1}/>
+      <Part ex={cont.ex2} count={cont.count2}/>
+      <Part ex={cont.ex3} count={cont.count3}/>
     </div>
   )
 }
