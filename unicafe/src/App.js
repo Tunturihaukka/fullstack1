@@ -6,11 +6,30 @@ const Button = ({ handleClick, text}) => (
   </button>
 )
 
-const StatisticLine = ({ text, value }) => {
+const valueParser = ({text, value}) => {
   if (text == "positive")
-    return <div>{text} {value} %</div>
+    return (
+        value + " %"
+    )
   return (
-    <div>{text} {value}</div>
+        value
+  )
+}
+
+const StatisticLine = (props) => {
+  const { text, value} = props
+  const secondcolumn = valueParser(props)
+  return (
+    <tbody>
+      <tr>
+        <td>
+          {text}
+        </td>
+        <td>
+          {secondcolumn}
+        </td>
+      </tr>
+    </tbody>
   )
 }
 
@@ -42,14 +61,14 @@ const Statistics = (props) => {
   if (feedbacks == 0)
     return <div>No feedback given</div>
   return (
-    <div>
+    <table cellSpacing="1" cellPadding="1">
       <StatisticLine text="good" value={good} />
       <StatisticLine text="neutral" value={neutral} />
       <StatisticLine text="bad" value={bad} />
       <StatisticLine text="all" value={feedbacks} />
       <StatisticLine text="average" value={avg} />
       <StatisticLine text="positive" value={pos} />
-    </div>
+    </table>
       
   )
   
