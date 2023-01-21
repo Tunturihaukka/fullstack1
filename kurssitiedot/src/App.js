@@ -1,17 +1,23 @@
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const part1 = {
+    name: 'Fundamentals of React',
+    exercises: 10
+  }
+  const part2 = {
+    name: 'Using props to pass data',
+    exercises: 7
+  }
+  const part3 = {
+    name: 'State of a component',
+    exercises: 14
+  }
 
   return (
     <div>
       <Header course={course}/>
-      <Content ex1={part1} count1={exercises1} ex2={part2} count2={exercises2} ex3={part3} count3={exercises3} />
-      <Total first={exercises1} second={exercises2} third = {exercises3}/>
+      <Content part1={part1} part2={part2} part3={part3}/>
+      <Total first={part1.exercises} second={part2.exercises} third = {part3.exercises}/>
     </div>
   )
 }
@@ -26,22 +32,26 @@ const Total = (exs) => {
   )
 }
 
+{/* Expects an object with attirbutes 'name' and 'exercises' */}
 const Part = (part) => {
   return(
     <div>
       <p>
-        {part.ex} {part.count}
+        {part.name} {part.exercises}
       </p>
     </div>
   )
 }
 
-const Content = (cont) => {
+{/* Expects an object parts, which has 3 attributes (part1-3).*/}
+{/* Those attributes are expected to be objects themselves,*/}
+{/* and to have attributes 'name' and 'exercises'*/}
+const Content = (parts) => {
   return(
     <div>
-      <Part ex={cont.ex1} count={cont.count1}/>
-      <Part ex={cont.ex2} count={cont.count2 + 5}/>
-      <Part ex={cont.ex3} count={cont.count3}/>
+      <Part name={parts.part1.name} exercises={parts.part1.exercises}/>
+      <Part name={parts.part2.name} exercises={parts.part2.exercises}/>
+      <Part name={parts.part3.name} exercises={parts.part3.exercises}/>
     </div>
   )
 }
