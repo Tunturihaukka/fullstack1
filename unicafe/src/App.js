@@ -6,9 +6,13 @@ const Button = ({ handleClick, text}) => (
   </button>
 )
 
-const Display = ({ text, value }) => (
+const StatisticLine = ({ text, value }) => {
+  if (text == "positive")
+    return <div>{text} {value} %</div>
+  return (
     <div>{text} {value}</div>
-)
+  )
+}
 
 const ComputeAvg = (props) => {
   const { good, neutral, bad } = props
@@ -22,26 +26,29 @@ const SumAll = ({ good, neutral, bad }) => (
   good + neutral + bad
 )
 
-const DisplayPositives = (props) => {
+const ComputePositives = (props) => {
   const { good, neutral, bad } = props
   const clicks = SumAll(props)
   return (
-    <div>
-      positive {(good/clicks)*100} %
-    </div>
+    (good/clicks)*100
   )
 }
 
 const Statistics = (props) => {
   const {good, neutral, bad} = props
+  const feedbacks = SumAll(props)
+  const avg = ComputeAvg(props)
+  const pos = ComputePositives(props)
+  if (feedbacks == 0)
+    return <div>No feedback given</div>
   return (
     <div>
-      <Display text="good" value={good} />
-      <Display text="neutral" value={neutral} />
-      <Display text="bad" value={bad} />
-      <Display text="all" value={SumAll(props)} />
-      <Display text="average" value={ComputeAvg(props)} />
-      <DisplayPositives {...props} />
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={feedbacks} />
+      <StatisticLine text="average" value={avg} />
+      <StatisticLine text="positive" value={pos} />
     </div>
       
   )
