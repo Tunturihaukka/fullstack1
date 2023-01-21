@@ -6,10 +6,46 @@ const Button = ({ handleClick, text}) => (
   </button>
 )
 
-const Display = ({ text, value }) => {
-  return (
+const Display = ({ text, value }) => (
     <div>{text} {value}</div>
+)
+
+const ComputeAvg = (props) => {
+  const { good, neutral, bad } = props
+  const clicks = SumAll(props)
+  return (
+    (good-bad)/clicks
   )
+}
+
+const SumAll = ({ good, neutral, bad }) => (
+  good + neutral + bad
+)
+
+const DisplayPositives = (props) => {
+  const { good, neutral, bad } = props
+  const clicks = SumAll(props)
+  return (
+    <div>
+      positive {(good/clicks)*100} %
+    </div>
+  )
+}
+
+const Statistics = (props) => {
+  const {good, neutral, bad} = props
+  return (
+    <div>
+      <Display text="good" value={good} />
+      <Display text="neutral" value={neutral} />
+      <Display text="bad" value={bad} />
+      <Display text="all" value={SumAll(props)} />
+      <Display text="average" value={ComputeAvg(props)} />
+      <DisplayPositives {...props} />
+    </div>
+      
+  )
+  
 }
 
 const App = () => {
@@ -20,31 +56,27 @@ const App = () => {
   const [allClicks, setAll] = useState(0)
   const [avg, setAvg] = useState(0)
   const [positives, setPositives] = useState(0)
+  
 
   const handleGoodClick = () => {
     const values = [good+1, bad, allClicks+1]
-    computeAvg(values)
+    ComputeAvg(values)
     setGood(good + 1)
     setAll(allClicks + 1)
     setPositives(positives + 1)
   }
   const handleNeutralClick = () => {
     const values = [good, bad, allClicks+1]
-    computeAvg(values)
+    ComputeAvg(values)
     setNeutral(neutral + 1)
     setAll(allClicks + 1)
   }
   const handleBadClick = () => {
     const values = [good, bad+1, allClicks+1]
-    computeAvg(values)
+    ComputeAvg(values)
     setBad(bad + 1)
     setAll(allClicks + 1)
   }
-  const computeAvg = (props) => {
-    const average = (props[0]-props[1])/props[2]
-    setAvg(average)
-  }
-
 
   return (
     <div>
@@ -57,12 +89,7 @@ const App = () => {
       <h1>
         statistics
       </h1>
-      <Display text="good" value={good} />
-      <Display text="neutral" value={neutral} />
-      <Display text="bad" value={bad} />
-      <Display text="all" value={allClicks} />
-      <Display text="average" value={avg} />
-      <Display text="positive" value={positives} />
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
