@@ -1,32 +1,53 @@
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10
-  }
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7
-  }
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
   }
 
   return (
     <div>
-      <Header course={course}/>
-      <Content part1={part1} part2={part2} part3={part3}/>
-      <Total first={part1.exercises} second={part2.exercises} third = {part3.exercises}/>
+        <Header {...course}/>
+        <Content {...course}/>
+        <Total {...course}/>
     </div>
   )
 }
 
-const Total = (exs) => {
+{/* Expects an object having 2 attributes, from which the second should
+ be ('parts') a list of three objects. Those objects should have 2 attributes
+ each, named 'name' and 'exercises', respectively. */}
+const Content = (contents) => {
+  return(
+    <div>
+      <Part name={contents.parts[0].name} exercises={contents.parts[0].exercises}/>
+      <Part name={contents.parts[1].name} exercises={contents.parts[1].exercises}/>
+      <Part name={contents.parts[2].name} exercises={contents.parts[2].exercises}/>
+    </div>
+  )
+}
+
+{/* Expectations analogous to the 'Content' function */}
+const Total = (contents) => {
+  const amount1 = contents.parts[0].exercises
+  const amount2 = contents.parts[1].exercises
+  const amount3 = contents.parts[2].exercises
   return(
     <div>
       <p>
-        Number of exercises {exs.first + exs.second + exs.third}
+        Number of exercises {amount1 + amount2 + amount3}
       </p>
     </div>
   )
@@ -43,23 +64,12 @@ const Part = (part) => {
   )
 }
 
-{/* Expects an object parts, which has 3 attributes (part1-3).*/}
-{/* Those attributes are expected to be objects themselves,*/}
-{/* and to have attributes 'name' and 'exercises'*/}
-const Content = (parts) => {
+{/* Expects an object having 2 attributes, from which the first should
+ be ('name') a header for a listing. */}
+const Header = (contents) => {
   return(
     <div>
-      <Part name={parts.part1.name} exercises={parts.part1.exercises}/>
-      <Part name={parts.part2.name} exercises={parts.part2.exercises}/>
-      <Part name={parts.part3.name} exercises={parts.part3.exercises}/>
-    </div>
-  )
-}
-
-const Header = (header) => {
-  return(
-    <div>
-      <h1><p>{header.course}</p></h1>
+      <h1><p>{contents.name}</p></h1>
     </div>
   )
 }
