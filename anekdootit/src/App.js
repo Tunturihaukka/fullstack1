@@ -13,17 +13,24 @@ const App = () => {
   ]
 
   const listlength = anecdotes.length
-  console.log(listlength)
   const stateinit = getRandomInt([0, listlength])
   const [selected, setSelected] = useState(stateinit)
+  const [votes, setVotes] = useState([0, 0, 0, 0, 0, 0, 0, 0])
   const handleClick = () => {
     setSelected(getRandomInt([0, listlength]))
+  }
+  const voteClick = () => {
+    const tablecopy = [...votes]
+    tablecopy[selected] += 1
+    setVotes(tablecopy)
   }
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <Button setFunction={handleClick}/>
+      <p>has {votes[selected]} votes</p>
+      <Button setFunction={voteClick} text={"vote"}/>
+      <Button setFunction={handleClick} text={"next"}/>
     </div>
   )
 }
@@ -36,10 +43,22 @@ const getRandomInt = (props) => {
   return randInt
 }
 
-const Button = ({ setFunction }) => (
-  <button onClick={setFunction}>
-    next anecdote
-  </button>
-)
+const Button = (props) => {
+  const clicktype = props.text
+  const setFunction = props.setFunction
+  if (clicktype == "vote")
+    return (
+      <button onClick={setFunction}>
+        vote
+      </button>
+    )
+  else 
+    return (
+      <button onClick={setFunction}>
+        next anecdote
+      </button>
+    )
+}
+
 
 export default App
