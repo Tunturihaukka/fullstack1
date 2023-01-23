@@ -25,12 +25,33 @@ const App = () => {
     setVotes(tablecopy)
   }
 
+
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <Button setFunction={voteClick} text={"vote"}/>
       <Button setFunction={handleClick} text={"next"}/>
+      <h1>Anecdote with most votes</h1>
+      <DisplayMostVotes anecdotes={anecdotes} votes={votes}/>
+    </div>
+  )
+}
+
+const DisplayMostVotes = ({ anecdotes, votes}) => {
+  let indexoflargest = 0
+  for (let i = 0; i < votes.length; i++) {
+    const votesnow = votes[indexoflargest]
+    const votesnew = votes[i]
+    if (votesnow < votesnew)
+      indexoflargest = i
+  }
+  return (
+    <div>
+      <p>{anecdotes[indexoflargest]}</p>
+      <p>has {votes[indexoflargest]} votes</p>
     </div>
   )
 }
